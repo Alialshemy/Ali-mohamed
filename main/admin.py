@@ -13,6 +13,7 @@ admin.site.register(models.section)
 admin.site.register(models.seller)
 admin.site.register(models.store)
 admin.site.register(models.stuff)
+admin.site.register(models.orderitem)
 
 
 

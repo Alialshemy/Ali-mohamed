@@ -55,18 +55,12 @@ class  cart(models.Model):
 
    
     
-    def __str__(self) -> str:
-         return self.name
+   
 
 class  cartitem(models.Model):
     product_id = models.ForeignKey('product',on_delete=models.CASCADE)
     cart_id=models.ForeignKey('cart',on_delete=models.CASCADE)
 
-
-   
-    
-    def __str__(self) -> str:
-         return self.name
 class  stuff(models.Model):
     name = models.CharField(max_length=30)
     store_id=models.ForeignKey('store',on_delete=models.CASCADE)
@@ -84,17 +78,10 @@ class  order(models.Model):
     customer_id=models.ForeignKey('customer',on_delete=models.CASCADE)
     store_id=models.ForeignKey('store',on_delete=models.CASCADE)
     seller_id=models.ForeignKey('seller',on_delete=models.CASCADE)
-   
-    
-    def __str__(self) -> str:
-          return self.name
 class  orderitem(models.Model):
     order_id=models.ForeignKey('order',on_delete=models.CASCADE)
     product_id=models.ForeignKey('product',on_delete=models.CASCADE)
    
-    
-    def __str__(self) -> str:
-          return self.name
 
 
 
