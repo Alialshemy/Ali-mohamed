@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://json.schemastore.org/circleciconfig.json": "file:///media/ali/External/Python/Project/Mohamed/project/project/.circleci/config.yml"
+    }
+}
