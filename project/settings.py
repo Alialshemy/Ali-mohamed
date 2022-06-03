@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-bvwm!=s3_sv_*z&_xi+it44g-iyohe_@envqwdn0)_i9um*ht(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # add new line 
+#add new
 ALLOWED_HOSTS = ['54.91.180.64',]
 
 
