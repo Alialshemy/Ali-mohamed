@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-bvwm!=s3_sv_*z&_xi+it44g-iyohe_@envqwdn0)_i9um*ht(
 DEBUG = True
 # add new line 
 #add new
-ALLOWED_HOSTS = ['54.91.180.64',]
+ALLOWED_HOSTS = ['54.91.180.64','127.0.0.1']
 
 
 # Application definition
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main' ,
+        'location_field.apps.DefaultConfig',
+
 ]
 
 MIDDLEWARE = [
