@@ -12,9 +12,10 @@ class store(models.Model):
     data_create=models.DateField()
     capital=models.BigIntegerField()
     purchases=models.BigIntegerField()
-####################################################################
+
     def __str__(self) -> str:
          return self.name
+####################################################################
 class section(models.Model):
     name = models.CharField(max_length=30)
     store_id=models.ForeignKey('store',on_delete=models.CASCADE)
@@ -50,7 +51,7 @@ class product(models.Model):
     def __str__(self) -> str:
          return self.name
 ################################################################
-class user(models.Model):
+class customer(models.Model):
     name = models.CharField(max_length=30)
     store_id=models.ForeignKey('store',on_delete=models.CASCADE)
     phone=models.CharField(max_length=11)
@@ -66,7 +67,7 @@ class user(models.Model):
 ################################################################
 class  cart(models.Model):
     store_id = models.ForeignKey('store',on_delete=models.CASCADE)
-    manager_id=models.ForeignKey('user',on_delete=models.CASCADE)
+    manager_id=models.ForeignKey('customer',on_delete=models.CASCADE)
     date=models.DateField()
     purchas_price=models.DecimalField(max_digits=20, decimal_places=10)
 
@@ -83,9 +84,9 @@ class  cartitem(models.Model):
     remaining=models.BigIntegerField()
 ##################################################################
 class  order(models.Model):
-    customer_id=models.ForeignKey('user',on_delete=models.CASCADE)
+    customer_id=models.ForeignKey('customer',on_delete=models.CASCADE)
     store_id=models.ForeignKey('store',on_delete=models.CASCADE)
-   # seller_id=models.ForeignKey('user',on_delete=models.CASCADE)
+    seller_id=models.ForeignKey('stuff',on_delete=models.CASCADE)
     date=models.DateField()
     purchas_price=models.DecimalField(max_digits=20, decimal_places=10)
     sellin_price=models.DecimalField(max_digits=20, decimal_places=10)
@@ -115,6 +116,14 @@ class month(models.Model):
 class company(models.Model):
     name=models.CharField(max_length=50)
     store_id=models.ForeignKey('store',on_delete=models.CASCADE)
+######################################################################
+class stuff(models.Model):
+    list=( ('seller','seller'),('employe','employe'),('manager','manager'),('boss','boss') )
+    name=models.CharField(max_length=50)
+    store_id=models.ForeignKey('store',on_delete=models.CASCADE)
+    phone=models.CharField(max_length=11)
+    image=models.ImageField()
+    role=models.CharField(max_length=50,choices=list)
 
 
 
