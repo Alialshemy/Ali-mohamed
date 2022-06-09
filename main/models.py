@@ -1,4 +1,5 @@
 from ast import mod
+from distutils.command.upload import upload
 from email.mime import image
 from unicodedata import name
 from django.db import models
@@ -19,7 +20,7 @@ class store(models.Model):
 class section(models.Model):
     name = models.CharField(max_length=30)
     store_id=models.ForeignKey('store',on_delete=models.CASCADE)
-    image=models.ImageField()
+    image=models.ImageField(upload_to='images/section/%y/%m/%d')
     
     def __str__(self) -> str:
         return self.name
@@ -27,7 +28,7 @@ class section(models.Model):
 class category(models.Model):
     name = models.CharField(max_length=30)
     section_id = models.ForeignKey('section',on_delete=models.CASCADE)
-    image=models.ImageField()
+    image=models.ImageField(upload_to='images/categor/%y/%m/%d')
    
     
     def __str__(self) -> str:
@@ -37,7 +38,7 @@ class product(models.Model):
     name = models.CharField(max_length=30)
     category_id=models.ForeignKey('category',on_delete=models.CASCADE)
     company_id=models.ForeignKey('company',on_delete=models.CASCADE)
-    image=models.ImageField()
+    image=models.ImageField(upload_to='images/product/%y/%m/%d')
     current_cartitem_id=models.ForeignKey('cartitem',on_delete=models.CASCADE)
     unit_name=models.CharField(max_length=50)
     selling_price=models.DecimalField(max_digits=20, decimal_places=10)
@@ -55,7 +56,7 @@ class customer(models.Model):
     name = models.CharField(max_length=30)
     store_id=models.ForeignKey('store',on_delete=models.CASCADE)
     phone=models.CharField(max_length=11)
-    image=models.ImageField()
+    image=models.ImageField(upload_to='images/customer/%y/%m/%d')
     location=PlainLocationField(based_fields=['city'], zoom=7)
     market_name=models.CharField(max_length=50)
     address=models.CharField(max_length=50)
@@ -122,7 +123,7 @@ class stuff(models.Model):
     name=models.CharField(max_length=50)
     store_id=models.ForeignKey('store',on_delete=models.CASCADE)
     phone=models.CharField(max_length=11)
-    image=models.ImageField()
+    image=models.ImageField(upload_to='images/stuff/%y/%m/%d')
     role=models.CharField(max_length=50,choices=list)
 
 
