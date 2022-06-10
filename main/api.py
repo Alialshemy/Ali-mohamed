@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 #####################################################
 @api_view(['GET'])
 def get_all_Section_in_store(request,id):
-    sections= models.section.objects.filter(id=id)
+    sections= models.section.objects.filter(store_id=id)
     data=serializers.SectionSerializer(sections,many=True).data
     return Response({'data':data})
 #############################################################
