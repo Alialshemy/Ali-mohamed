@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['54.227.100.149','127.0.0.1']
 
 INSTALLED_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,8 +43,14 @@ INSTALLED_APPS = [
     'main' ,
         'location_field.apps.DefaultConfig',
      
+     
 ]
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':
+      ['rest_framework.authentication.TokenAuthentication'],
+    'DEFAULT_PERMISSION_CLASSES':
+      ['rest_framework.permissions.IsAuthenticated'],
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
