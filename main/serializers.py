@@ -5,6 +5,10 @@ class SectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.section
         fields = '__all__'
+class StoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.store
+        fields = '__all__'
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.category

@@ -14,29 +14,32 @@ from rest_framework.permissions import  AllowAny, IsAuthenticated, IsAdminUser, 
 
 from rest_framework.authtoken.models import Token
 #####################################################
-class get_all_Section_in_store(generics.ListAPIView):
-    queryset = models.section.objects.all()
-    serializer_class = serializers.SectionSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+class store(viewsets.ModelViewSet):
+    queryset = models.store.objects.all()
+    serializer_class = serializers.StoreSerializer
+   # authentication_classes = (TokenAuthentication,)
+   # permission_classes = (IsAuthenticated,)
+   
 
 #############################################################
-class get_all_category_in_section(generics.ListAPIView):
-    queryset = models.category.objects.filter(section_id=id)
+class sections(viewsets.ModelViewSet):
+    queryset = models.section.objects.all()
     serializer_class = serializers.SectionSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+  #  authentication_classes = (TokenAuthentication,)
+  #  permission_classes = (IsAuthenticated,)
 ############################################################
-class get_all_product_in_category(generics.ListAPIView):
-    queryset = models.product.objects.filter(category_id=id)
-    serializer_class = serializers.SectionSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+class category(viewsets.ModelViewSet):
+    queryset = models.category.objects.all()
+    serializer_class = serializers.CategorySerializer
+  #  authentication_classes = (TokenAuthentication,)
+  #  permission_classes = (IsAuthenticated,)
+
 ###################################################################
+'''
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
-    # #authentication_classes = (TokenAuthentication, )
+    #authentication_classes = (TokenAuthentication, )
     permission_classes = (AllowAny,)
     
     def create(self, request, *args, **kwargs):
@@ -52,3 +55,4 @@ class UserViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         response = {'message': 'Invild data'}
         return Response(response, status=status.HTTP_400_BAD_REQUEST)
+        '''
