@@ -12,6 +12,7 @@ router = routers.DefaultRouter()
 router.register('store',api.store )
 router.register('sections',api.sections )
 router.register('category',api.category )
+router.register('product',api.product )
 
 urlpatterns = [
   #  path('store/<str:id>', api.get_all_Section_in_store.as_view(),name='get_all_Section_in_store'),
@@ -21,5 +22,6 @@ urlpatterns = [
     path('login/',obtain_auth_token),
 
     path('', include(router.urls)),
-    
+    path('login/',obtain_auth_token),
+   
 ]

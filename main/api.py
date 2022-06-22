@@ -1,4 +1,6 @@
 
+from argparse import Action
+import imp
 from  rest_framework.response import Response
 from . import models
 from . import serializers
@@ -7,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics, mixins, viewsets
 from rest_framework import request, status, viewsets
 from django.contrib.auth.models import User
-
+from rest_framework.decorators import action
 from rest_framework.authentication import TokenAuthentication
 
 from rest_framework.permissions import  AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
@@ -25,16 +27,37 @@ class store(viewsets.ModelViewSet):
 class sections(viewsets.ModelViewSet):
     queryset = models.section.objects.all()
     serializer_class = serializers.SectionSerializer
+    @action(detail=True,methods=['get'],url_path='store')
+    def section_in_store(self,request,pk=None):
+        st=models.section.objects.filter(store_id=pk)
+        serializer = self.get_serializer(st,many=True)
+        return Response (serializer.data)
   #  authentication_classes = (TokenAuthentication,)
   #  permission_classes = (IsAuthenticated,)
 ############################################################
 class category(viewsets.ModelViewSet):
     queryset = models.category.objects.all()
     serializer_class = serializers.CategorySerializer
-  #  authentication_classes = (TokenAuthentication,)
+    # authentication_classes = (TokenAuthentication,)
   #  permission_classes = (IsAuthenticated,)
+    @action(detail=True,methods=['get'],url_path='section')
+    def cartegory_in_section(self,request,pk=None):
+        st=models.category.objects.filter(section_id=pk)
+        serializer = self.get_serializer(st,many=True)
+        return Response (serializer.data)
 
 ###################################################################
+class product(viewsets.ModelViewSet):
+    queryset = models.product.objects.all()
+    serializer_class = serializers.ProductSerializer
+    # authentication_classes = (TokenAuthentication,)
+  #  permission_classes = (IsAuthenticated,)
+    @action(detail=True,methods=['get'],url_path='category')
+    def product_in_category(self,request,pk=None):
+        st=models.product.objects.filter(category_id=pk)
+        serializer = self.get_serializer(st,many=True)
+        return Response (serializer.data)
+##############################################
 '''
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
