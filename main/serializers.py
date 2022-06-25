@@ -31,3 +31,12 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'password')
         extra_kwargs = {'password': {'write_only': True, 'required': True}}
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.order
+        fields = '__all__'
+class OrderitemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.orderitem
+        fields = '__all__'

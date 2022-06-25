@@ -60,12 +60,24 @@ class product(viewsets.ModelViewSet):
 ##############################################
 class cart(viewsets.ModelViewSet):
     queryset = models.cart.objects.all()
-    serializer_class = serializers.ProductSerializer
+    serializer_class = serializers.CartSerializer
     # authentication_classes = (TokenAuthentication,)
   #  permission_classes = (IsAuthenticated,)
 class cartitems(viewsets.ModelViewSet):
     queryset = models.cartitem.objects.all()
-    serializer_class = serializers.ProductSerializer
+    serializer_class = serializers.CartItemSerializer
+    # authentication_classes = (TokenAuthentication,)
+  #  permission_classes = (IsAuthenticated,)
+  #######################################################
+class order(viewsets.ModelViewSet):
+    queryset = models.order.objects.all()
+    serializer_class = serializers.OrderitemSerializer
+    # authentication_classes = (TokenAuthentication,)
+  #  permission_classes = (IsAuthenticated,)
+   #################################################
+class orderitems(viewsets.ModelViewSet):
+    queryset = models.orderitem.objects.all()
+    serializer_class = serializers.OrderitemSerializer
     # authentication_classes = (TokenAuthentication,)
   #  permission_classes = (IsAuthenticated,)
    
