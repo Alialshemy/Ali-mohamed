@@ -13,7 +13,8 @@ router.register('store',api.store )
 router.register('sections',api.sections )
 router.register('category',api.category )
 router.register('product',api.product )
-
+router.register('cart',api.cart )
+router.register('cartitems',api.cartitems )
 urlpatterns = [
   #  path('store/<str:id>', api.get_all_Section_in_store.as_view(),name='get_all_Section_in_store'),
  #   path('section/<str:id>', api.get_all_category_in_section.as_view(),name='get_all_category_in_section'),

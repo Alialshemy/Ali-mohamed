@@ -52,7 +52,6 @@ class product(models.Model):
     category_id=models.ForeignKey('category',on_delete=models.CASCADE)
     company_id=models.ForeignKey('company',on_delete=models.CASCADE)
     image=models.ImageField(upload_to=get_file_path)
-    current_cartitem_id=models.ForeignKey('cartitem',on_delete=models.CASCADE)
     unit_name=models.CharField(max_length=50)
     selling_price=models.DecimalField(max_digits=20, decimal_places=10)
     has_list=models.BooleanField(default=False)

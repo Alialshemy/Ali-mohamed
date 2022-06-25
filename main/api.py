@@ -58,6 +58,17 @@ class product(viewsets.ModelViewSet):
         serializer = self.get_serializer(st,many=True)
         return Response (serializer.data)
 ##############################################
+class cart(viewsets.ModelViewSet):
+    queryset = models.cart.objects.all()
+    serializer_class = serializers.ProductSerializer
+    # authentication_classes = (TokenAuthentication,)
+  #  permission_classes = (IsAuthenticated,)
+class cartitems(viewsets.ModelViewSet):
+    queryset = models.cartitem.objects.all()
+    serializer_class = serializers.ProductSerializer
+    # authentication_classes = (TokenAuthentication,)
+  #  permission_classes = (IsAuthenticated,)
+   
 '''
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
