@@ -71,7 +71,7 @@ class cartitems(viewsets.ModelViewSet):
   #######################################################
 class order(viewsets.ModelViewSet):
     queryset = models.order.objects.all()
-    serializer_class = serializers.OrderitemSerializer
+    serializer_class = serializers.OrderSerializer
     # authentication_classes = (TokenAuthentication,)
   #  permission_classes = (IsAuthenticated,)
    #################################################

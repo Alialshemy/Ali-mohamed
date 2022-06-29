@@ -1,0 +1,18 @@
+node {
+    def mvnHome
+    stage('Preparation') { // for display purposes
+        // Get some code from a GitHub repository
+        git 'https://github.com/Alialshemy/Ali-mohamed.git'
+    }
+    stage('Build') {
+       sh 'docker build --tag rabih:v1 '
+       
+    }
+    stage('deployment') {
+        sh 'docker stop $(docker ps -aq)'
+        sh 'docker rm $(docker ps -aq)'
+        sh  'docker rmi $(docker images -q)'
+        sh 'docker run -d -p 80:80 rabih:v1'
+
+    }
+}
