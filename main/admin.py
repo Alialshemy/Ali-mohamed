@@ -1,7 +1,7 @@
 from django.contrib import admin
 from . import models
 # Register your models here.
-admin.site.register(models.customer)
+admin.site.register(models.profile)
 admin.site.register(models.month)
 admin.site.register(models.ads)
 admin.site.register(models.category)
