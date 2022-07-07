@@ -1,5 +1,5 @@
 // the jenkins file to build my project 
-node {
+pipline {
     agent { label 'aws'}
     def mvnHome
     stage('Preparation') { // for display purposes
