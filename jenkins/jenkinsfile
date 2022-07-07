@@ -9,9 +9,9 @@ pipeline {
 
                 // Run Maven on a Unix agent.
                   sh "echo successfully"
-             //   sh 'docker stop $(docker ps -aq)'
-              //  sh 'docker rm $(docker ps -aq)'
-             //   sh  'docker rmi $(docker images -q)'
+                  sh 'docker stop $(docker ps -aq)'
+                  sh 'docker rm $(docker ps -aq)'
+                  sh  'docker rmi $(docker images -q)'
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
