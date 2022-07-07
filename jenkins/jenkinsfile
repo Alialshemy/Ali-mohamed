@@ -3,7 +3,7 @@ pipeline {
     
 
     stages {
-        stage('Build') {
+        stage('Prep') {
             steps {
                 // Get some code from a GitHub repository
 
@@ -13,6 +13,17 @@ pipeline {
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
+        stage('Build') {
+              sh 'docker build --tag rabih:v1 '
+       
+    }
+        stage('deployment') {
+            sh 'docker stop $(docker ps -aq)'
+            sh 'docker rm $(docker ps -aq)'
+            sh  'docker rmi $(docker images -q)'
+            sh 'docker run -d -p 80:80 rabih:v1'
+
+    }
 
         
             }
