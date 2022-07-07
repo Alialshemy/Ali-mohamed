@@ -6,16 +6,16 @@ pipline {
         // Get some code from a GitHub repository
        sh 'echo preapatiion sussessfully'
     }
-    '''
-    stage('Build') {
-       sh 'docker build --tag rabih:v1 '
+    
+ //   stage('Build') {
+ //      sh 'docker build --tag rabih:v1 '
        
-    }
-    stage('deployment') {
-        sh 'docker stop $(docker ps -aq)'
-        sh 'docker rm $(docker ps -aq)'
-        sh  'docker rmi $(docker images -q)'
-        sh 'docker run -d -p 80:80 rabih:v1'
+//    }
+  //  stage('deployment') {
+  //      sh 'docker stop $(docker ps -aq)'
+     //   sh 'docker rm $(docker ps -aq)'
+   //     sh  'docker rmi $(docker images -q)'
+   //     sh 'docker run -d -p 80:80 rabih:v1'
 
-    }'''
+  //  }
 }
