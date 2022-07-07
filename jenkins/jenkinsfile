@@ -1,21 +1,21 @@
-// the jenkins file to build my project 
-pipline {
-  //  agent { label 'aws'}
-    def mvnHome
-    stage('Preparation') { // for display purposes
-        // Get some code from a GitHub repository
-       sh 'echo preapatiion sussessfully'
-    }
+pipeline {
+    agent { label 'aws'}
     
- //   stage('Build') {
- //      sh 'docker build --tag rabih:v1 '
-       
-//    }
-  //  stage('deployment') {
-  //      sh 'docker stop $(docker ps -aq)'
-     //   sh 'docker rm $(docker ps -aq)'
-   //     sh  'docker rmi $(docker images -q)'
-   //     sh 'docker run -d -p 80:80 rabih:v1'
 
-  //  }
+    stages {
+        stage('Build') {
+            steps {
+                // Get some code from a GitHub repository
+
+                // Run Maven on a Unix agent.
+                sh "echo successfully"
+
+                // To run Maven on a Windows agent, use
+                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+
+        
+            }
+        
+    }
 }
