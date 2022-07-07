@@ -21,9 +21,9 @@ pipeline {
     }
         stage('deployment') {
              steps {
-            sh 'docker stop $(docker ps -aq)'
-            sh 'docker rm $(docker ps -aq)'
-            sh  'docker rmi $(docker images -q)'
+         //   sh 'docker stop $(docker ps -aq)'
+        //    sh 'docker rm $(docker ps -aq)'
+       //     sh  'docker rmi $(docker images -q)'
             sh 'docker run -d -p 80:80 rabih:v1'
             }
 
