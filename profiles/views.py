@@ -31,10 +31,7 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
-        token, created = Token.objects.get_or_create(user=serializer.instance)
-      
         return Response({
-                'token': token.key, 
                 'send' : 'opt-verify'
                 }, 
             status=status.HTTP_201_CREATED)

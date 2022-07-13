@@ -27,13 +27,27 @@ from rest_framework.parsers import JSONParser
 ##############################################
 @api_view(['POST'])
 def verify(request):
-    print(request.data)
-    opt=serializers.verifySerliazer(request.data)
-    #opt.data
-    print(opt.data)
-   # if User.objects.filter(username=)
-    return Response({"message": "Will not appear in schema!"})
-    '''
+  try:
+
+     otp=request.data[0]["otp"]
+     username=request.data[0]["username"]
+     print(otp)
+     user_id=User.objects.filter(username=username)
+     otp_store=models.opt.objects.filter(user=user_id[0].id)
+     p=otp_store[0].opt
+     if otp == p :
+        token, created = Token.objects.get_or_create(user=user_id[0])
+        otp_store.delete()
+        return Response({ 'token' :token.key })
+     else:
+         return Response({ "Not Valid otp"})
+  except:
+     return Response({ "Not Valid Data"})
+
+
+        
+     
+'''
 class opt(viewsets.ModelViewSet):
     
     account_sid = 'AC097b5c7e29ab100f96a02bd1028c3d52'
