@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'Category',
     'product',
     'company',
+    'opt_message',
         'location_field.apps.DefaultConfig',
      
      

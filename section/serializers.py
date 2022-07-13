@@ -5,3 +5,4 @@ class SectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.section
         fields = '__all__'
+
