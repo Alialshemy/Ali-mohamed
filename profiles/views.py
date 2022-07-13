@@ -32,9 +32,7 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         token, created = Token.objects.get_or_create(user=serializer.instance)
-        # send opt message to number of user
-        account_sid = 'AC097b5c7e29ab100f96a02bd1028c3d52'
-        auth_token =  'd49afc7d79f10ec94282579310c01715'
+      
         return Response({
                 'token': token.key, 
                 'send' : 'opt-verify'
@@ -50,7 +48,7 @@ class UserViewSet(viewsets.ModelViewSet):
                n = random.randint(1,9)
                code+=str(n)
             account_sid = 'AC097b5c7e29ab100f96a02bd1028c3d52'
-            auth_token =  'd49afc7d79f10ec94282579310c01715'
+            auth_token =  '79cf2633259a6ed92291e3acb2b6d573'
             client = Client(account_sid, auth_token)
             print(type(instance))
             message = client.messages.create(
