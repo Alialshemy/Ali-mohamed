@@ -25,6 +25,7 @@ class sections(viewsets.ModelViewSet):
     def section_in_store(self,request,pk=None):
         st=models.section.objects.filter(store_id=pk)
         serializer = self.get_serializer(st,many=True)
+
         return Response (serializer.data)
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
