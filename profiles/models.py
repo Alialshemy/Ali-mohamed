@@ -20,6 +20,7 @@ def get_file_path(instance, filename):
     return os.path.join('uploads/', filename)
 ###############################
 class profile(models.Model):
+   # name=models.CharField(max_length=20)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     store_id=models.ForeignKey('Store.store',on_delete=models.CASCADE,default="null")
     phone=models.CharField(max_length=11,default='00000000000')
@@ -27,7 +28,8 @@ class profile(models.Model):
     location=PlainLocationField(based_fields=['city'], zoom=7)
     market_name=models.CharField(max_length=50,default='null')
     address=models.CharField(max_length=50,default='null')
-    wallet_money=models.DecimalField(max_digits=20, decimal_places=10,default=0)    
+    wallet_money=models.DecimalField(max_digits=20, decimal_places=10,default=0)  ##
+      
     def __str__(self):
         return self.user.username
 class stuff(models.Model):
