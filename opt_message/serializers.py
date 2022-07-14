@@ -5,7 +5,7 @@ from . import models
 
 class OptSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.opt
+        model = models.otp
         fields = '__all__'
 class verify:
     def __init__(self, opt, id):

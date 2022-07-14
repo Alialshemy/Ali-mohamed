@@ -18,7 +18,6 @@ from rest_framework.permissions import  AllowAny, IsAuthenticated, IsAdminUser, 
 import os
 from twilio.rest import Client
 from rest_framework.authtoken.models import Token
-from . import models
 import io
 from rest_framework.parsers import JSONParser
 
@@ -31,11 +30,11 @@ def verify(request):
 
      otp=request.data.get('otp')
      username=request.data.get('username')
-     user_id=User.objects.filter(username=username)
-     otp_store=models.opt.objects.filter(user=user_id[0].id)
-     p=otp_store[0].opt
+     otp_store=models.otp.objects.filter(username=username)
+     p=otp_store[0].otp
      if otp == p :
-        token, created = Token.objects.get_or_create(user=user_id[0])
+        cuser=User.objects.create(username=otp_store[0].username,password=otp_store[0].password)
+        token, created = Token.objects.get_or_create(user=cuser)
         otp_store.delete()
         return Response({ 'token' :token.key })
      else:

@@ -8,7 +8,7 @@ from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 router = routers.DefaultRouter()
 #router.register('register', api.UserViewSet)
-router.register('register',views.UserViewSet )
+#router.register('register',views.UserViewSet )
 
 
 
@@ -17,8 +17,9 @@ urlpatterns = [
  #   path('section/<str:id>', api.get_all_category_in_section.as_view(),name='get_all_category_in_section'),
 #    path('category/<str:id>', api.get_all_product_in_category.as_view(),name='get_all_product_in_category'),
     # create token 
-    path('', include(router.urls)),
+    path('register', views.register,name='register'),
     path('login',views.login,name='login'),
+
 
    
 ]

@@ -5,3 +5,7 @@ class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.store
         fields = '__all__'
+class StoreName(serializers.ModelSerializer):
+    class Meta:
+        model = models.store
+        fields = ["id","name"]

@@ -14,8 +14,9 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from pkg_resources import require #add this
 # Create your models here.
-class opt(models.Model):
-    opt=models.CharField(max_length=10)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+class otp(models.Model):
+    otp=models.CharField(max_length=10)
+    username = models.CharField(max_length=12)
+    password=models.CharField(max_length=20)
     def __str__(self) -> str:
-        return self.opt
+        return self.otp
