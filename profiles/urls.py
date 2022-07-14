@@ -17,5 +17,7 @@ urlpatterns = [
 #    path('category/<str:id>', api.get_all_product_in_category.as_view(),name='get_all_product_in_category'),
     # create token 
     path('/', include(router.urls)),
+    path('login',views.login,name='login'),
+
    
 ]

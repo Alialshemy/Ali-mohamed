@@ -29,9 +29,8 @@ from rest_framework.parsers import JSONParser
 def verify(request):
   try:
 
-     otp=request.data[0]["otp"]
-     username=request.data[0]["username"]
-     print(otp)
+     otp=request.data.get('otp')
+     username=request.data.get('username')
      user_id=User.objects.filter(username=username)
      otp_store=models.opt.objects.filter(user=user_id[0].id)
      p=otp_store[0].opt

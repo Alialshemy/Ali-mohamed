@@ -1,3 +1,4 @@
+from lib2to3.pgen2 import token
 import numbers
 import random
 from django.shortcuts import render
@@ -19,45 +20,57 @@ from rest_framework.permissions import  AllowAny, IsAuthenticated, IsAdminUser, 
 import os
 from twilio.rest import Client
 from rest_framework.authtoken.models import Token
+from rest_framework.decorators import api_view
 # Create your views here.
+@api_view(['POST'])
+def login(request):
+  try:
+     
+     username=request.data.get("username")
+     password=request.data.get("password")
+     user=User.objects.get(username=username)
+     if user.check_password(password):
+           otp=Token.objects.get(user=user.id)
+           return Response({ 'token':otp.key})
+     else:
+          return Response({ 'user' :"password Error"})       
+     
+    
+  except:
+     return Response({ "Not Register"})
 class UserViewSet(viewsets.ModelViewSet):
     
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
     authentication_classes = (TokenAuthentication, )
     permission_classes = (AllowAny,)
-    
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response({
-                'send' : 'opt-verify'
-                }, 
-            status=status.HTTP_201_CREATED)
-       
     @receiver(post_save, sender=User)
     def send_opt(sender, instance, created, **kwargs):
-      if created:
-            code=""
-            number=instance
-            for i in range(0,7):
-               n = random.randint(1,9)
-               code+=str(n)
-            account_sid = 'AC097b5c7e29ab100f96a02bd1028c3d52'
-            auth_token =  '79cf2633259a6ed92291e3acb2b6d573'
-            client = Client(account_sid, auth_token)
-            print(type(instance))
-            message = client.messages.create(
-                                body= "رمز التاكيد الخاص بيك فى رابح هو "+code,
-                                from_='+19794599329',
-                                to=number
-                            )
-           
-           
-            opt.objects.create(user=instance,opt=code)
-           
         
+        try:
+                if created:
+                    code=""
+                    number=instance
+                    for i in range(0,7):
+                                n = random.randint(1,9)
+                                code+=str(n)
+                    account_sid = 'AC097b5c7e29ab100f96a02bd1028c3d52'
+                    auth_token =  '79cf2633259a6ed92291e3acb2b6d573'
+                    client = Client(account_sid, auth_token)
+                    print(type(instance))
+                    message = client.messages.create(
+                                        body= "رمز التاكيد الخاص بيك فى رابح هو "+code,
+                                        from_='+19794599329',
+                                        to=number
+                                    )
+                
+                
+                    opt.objects.create(user=instance,opt=code)
+        except:
+            print("error")
+                
+     
+
 
 
     def list(self, request, *args, **kwargs):
