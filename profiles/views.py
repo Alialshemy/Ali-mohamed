@@ -4,7 +4,7 @@ import numbers
 import random
 from django.shortcuts import render
 from django.shortcuts import render
-from  opt_message import  models
+from  opt_message import  models as otp
 from argparse import Action
 import imp
 from  rest_framework.response import Response
@@ -21,39 +21,43 @@ import os
 from twilio.rest import Client
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
+from . import models
 # Create your views here.
 
 def check_user_exit(username):
     
      try:
         user_Exit=False
-        models.otp.objects.get(username=username)
+        otp.otp.objects.get(username=username)
         return True
-     except models.otp.DoesNotExist:
+     except otp.otp.DoesNotExist:
          return False
    
+class Profile(generics.CreateAPIView):
+    queryset = models.profile.objects.all()
+    serializer_class = serializers.ProfileSerialzer
+  #  authentication_classes = (TokenAuthentication,)
+  #  permission_classes = (IsAuthenticated,)
+
 
 
 @api_view(['POST'])
 def register(request):
     
-  try:
+   try:
      
      username=request.data.get("username")
      password=request.data.get("password")
-     if not check_user_exit(username):
-
-
-            
+     if not check_user_exit(username):            
             code=send_opt(username)     
-            models.otp.objects.create(username=username,password=password,otp=code)
+            otp.otp.objects.create(username=username,password=password,otp=code)
             return Response({ "send":"OK"})
 
      else:
         return Response({ "send":"user Exit"})
     
-  except: 
-     return Response({ "ERROR Data"})
+   except: 
+    return Response({ "ERROR Data"})
 #######################################################
 def send_opt(username):
         
@@ -64,7 +68,7 @@ def send_opt(username):
                                 n = random.randint(1,9)
                                 code+=str(n)
                     account_sid = 'AC097b5c7e29ab100f96a02bd1028c3d52'
-                    auth_token =  '79cf2633259a6ed92291e3acb2b6d573'
+                    auth_token =  '3b52d463a7784de749e2de88c55634ec'
                     client = Client(account_sid, auth_token)
                     message = client.messages.create(
                                         body= "رمز التاكيد الخاص بيك فى رابح هو "+code,

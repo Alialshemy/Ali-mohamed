@@ -19,6 +19,7 @@ urlpatterns = [
     # create token 
     path('register', views.register,name='register'),
     path('login',views.login,name='login'),
+    path('createprofile',views.Profile.as_view(),name='login'),
 
 
    

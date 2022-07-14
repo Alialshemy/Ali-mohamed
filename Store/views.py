@@ -27,5 +27,6 @@ class store(viewsets.ModelViewSet):
 class Get_store_name(generics.ListAPIView):
     queryset = models.store.objects.all()
     serializer_class = serializers.StoreName
-    ermission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     

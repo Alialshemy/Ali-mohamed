@@ -36,7 +36,7 @@ def verify(request):
         cuser=User.objects.create(username=otp_store[0].username,password=otp_store[0].password)
         token, created = Token.objects.get_or_create(user=cuser)
         otp_store.delete()
-        return Response({ 'token' :token.key })
+        return Response({ 'token' :token.key ,"user_id":cuser.id})
      else:
          return Response({ "Not Valid otp"})
   except:
