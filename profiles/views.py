@@ -108,7 +108,7 @@ def send_opt(username):
                                 n = random.randint(1,9)
                                 code+=str(n)
                     account_sid = 'AC097b5c7e29ab100f96a02bd1028c3d52'
-                    auth_token =  '3b52d463a7784de749e2de88c55634ec'
+                    auth_token =  'b9cbeb02b552d2e3b2484be826347cbc'
                     client = Client(account_sid, auth_token)
                     message = client.messages.create(
                                         body= "رمز التاكيد الخاص بيك فى رابح هو "+code,

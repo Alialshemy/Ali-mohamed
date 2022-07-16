@@ -36,8 +36,8 @@ class  User_profile(models.Model):
     location=PlainLocationField(based_fields=['city'], zoom=7)
     market_name=models.CharField(max_length=50)
     wallet_money=models.DecimalField(max_digits=20, decimal_places=10,default=0)  ##
-    marketAddress =models.CharField(max_length=50,)
-    marketName=models.CharField(max_length=50)
+    market_address =models.CharField(max_length=50,)
+   
     Role = models.CharField(max_length=512, choices=type,default="customer")
     def __str__(self):
         return self.name
