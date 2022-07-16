@@ -29,16 +29,15 @@ class  User_profile(models.Model):
         ]
     id = models.CharField(primary_key=True, default= uuid.uuid4, editable=False,max_length=40)
     name=models.CharField(max_length=20)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    store_id=models.ForeignKey('Store.store',on_delete=models.CASCADE,default="null")
-    phone=models.CharField(max_length=11,default='00000000000')
+    user_id= models.OneToOneField(User, on_delete=models.CASCADE)
+    store_id=models.ForeignKey('Store.store',on_delete=models.CASCADE)
+    phone=models.CharField(max_length=11)
     image=models.ImageField(upload_to=get_file_path)
     location=PlainLocationField(based_fields=['city'], zoom=7)
-    market_name=models.CharField(max_length=50,default='null')
-    address=models.CharField(max_length=50,default='null')
+    market_name=models.CharField(max_length=50)
     wallet_money=models.DecimalField(max_digits=20, decimal_places=10,default=0)  ##
-    marketAddress =models.CharField(max_length=50,default='null')
-    marketName=models.CharField(max_length=50,default='null')
+    marketAddress =models.CharField(max_length=50,)
+    marketName=models.CharField(max_length=50)
     Role = models.CharField(max_length=512, choices=type,default="customer")
     def __str__(self):
         return self.name

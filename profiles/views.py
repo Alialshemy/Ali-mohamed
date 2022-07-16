@@ -37,8 +37,8 @@ def check_user_exit(username):
 class Profile(generics.CreateAPIView):
     queryset = models.User_profile.objects.all()
     serializer_class = serializers.ProfileSerialzer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+ #   authentication_classes = (TokenAuthentication,)
+ #   permission_classes = (IsAuthenticated,)
 # return user with specific Role
 class Show_Custom_user(views.APIView):
    authentication_classes = (TokenAuthentication,)
@@ -129,7 +129,7 @@ def login(request):
      user=User.objects.get(username=username)
      if user.check_password(password):
            otp=Token.objects.get(user=user.id)
-           return Response({ 'token':otp.key})
+           return Response({ 'token':otp.key,'user_id':user.id})
      else:
           return Response({ 'user' :"password Error"})       
      
