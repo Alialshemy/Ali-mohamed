@@ -1,6 +1,7 @@
 from asyncio import FastChildWatcher
 from lib2to3.pgen2 import token
 import numbers
+from operator import eq
 import random
 from django.shortcuts import render
 from django.shortcuts import render
@@ -10,7 +11,7 @@ import imp
 from  rest_framework.response import Response
 from . import serializers
 from rest_framework import generics, mixins, viewsets
-from rest_framework import request, status, viewsets
+from rest_framework import request, status, viewsets,views
 from django.contrib.auth.models import User
 from rest_framework.decorators import action
 from rest_framework.authentication import TokenAuthentication
@@ -32,13 +33,52 @@ def check_user_exit(username):
         return True
      except otp.otp.DoesNotExist:
          return False
-   
+   # create new profile with user
 class Profile(generics.CreateAPIView):
-    queryset = models.profile.objects.all()
+    queryset = models.User_profile.objects.all()
     serializer_class = serializers.ProfileSerialzer
-  #  authentication_classes = (TokenAuthentication,)
-  #  permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+# return user with specific Role
+class Show_Custom_user(views.APIView):
+   authentication_classes = (TokenAuthentication,)
+   permission_classes = (IsAuthenticated,)
+   def get(self, request, role):
+        data = models.User_profile.objects.filter(Role=role)
+        if data:
+            serializer = serializers.ShowCustomSerialzer(data, many=True)
+            return Response(status=200, data=serializer.data)
+        return Response(status=400, data={" `User not found"})
 
+###################################################################
+# Return profile with specifi user         
+class Get_profile(views.APIView):
+   authentication_classes = (TokenAuthentication,)
+   permission_classes = (IsAuthenticated,)
+   def get(self, request, id):
+      try:
+        data = models.User_profile.objects.filter(user=id)
+        if data:
+            serializer = serializers.ProfileSerialzer(data, many=True)
+            return Response(status=200, data=serializer.data)
+        return Response(status=400, data={" `profile not found"})
+      except:
+            return Response(status=400, data={"Not valid Id"})
+################################################################################
+#  change role to specific user the do by boss only
+class Change_role(views.APIView):
+
+    def post(self, request):
+      try:
+            data = serializers.ChangeRoleSerialzer(request.data)
+            if request.data['Role'] == "customer" or request.data['Role'] == "manager" or request.data['Role'] == "stuff" or request.data['Role'] == "seller":
+                  change_user= models.User_profile.objects.filter(id=request.data['id']).update(Role=request.data['Role'])
+            else:
+               return Response(status=400, data={"Not valid Role"})
+            return Response(status=200, data={"Chane Success"})
+      except:
+           return Response(status=200, data={"Not valid data"})
+         
 
 
 @api_view(['POST'])

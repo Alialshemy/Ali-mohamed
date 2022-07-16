@@ -8,6 +8,13 @@ class OTPSerializer(serializers.ModelSerializer):
         fields = '__all__'
 class ProfileSerialzer(serializers.ModelSerializer):
     class Meta:
-        model = models.profile
+        model = models.User_profile
         fields = '__all__'
-
+class ChangeRoleSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User_profile
+        fields = ['id','Role']
+class ShowCustomSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User_profile
+        fields = ['id','name','marketName','image']

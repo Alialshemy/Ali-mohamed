@@ -20,6 +20,10 @@ urlpatterns = [
     path('register', views.register,name='register'),
     path('login',views.login,name='login'),
     path('createprofile',views.Profile.as_view(),name='login'),
+    path('get/<str:role>',views.Show_Custom_user.as_view(),name='Show_user'),
+    path('role',views.Change_role.as_view(),name='Change_role'),
+     path('profile/<int:id>',views.Get_profile.as_view(),name='Show_profile'),
+
 
 
    

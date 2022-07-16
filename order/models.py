@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from pkg_resources import require #add this
 from Store.models import store
-from profiles.models import stuff
+from profiles.models import User_profile
 from product.models import product
 def get_file_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -27,7 +27,7 @@ class  order(models.Model):
     id = models.CharField(primary_key=True, default= uuid.uuid4, editable=False,max_length=40)
     user_id=models.ForeignKey(User,on_delete=models.CASCADE)
     store_id=models.ForeignKey('Store.store',on_delete=models.CASCADE)
-    seller_id=models.ForeignKey('profiles.stuff',on_delete=models.CASCADE)
+    seller_id=models.ForeignKey('profiles.user_profile',on_delete=models.CASCADE)
     date=models.DateField()
     purchas_price=models.DecimalField(max_digits=20, decimal_places=10)
     sellin_price=models.DecimalField(max_digits=20, decimal_places=10)
