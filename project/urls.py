@@ -28,6 +28,6 @@ urlpatterns = [
     path('', include('section.urls')),
     path('', include('Category.urls')),
     path('user/', include('profiles.urls')),
-    path('verify', include('opt_message.urls')),
+    path('message/', include('opt_message.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

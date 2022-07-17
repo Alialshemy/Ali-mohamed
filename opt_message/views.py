@@ -1,3 +1,4 @@
+from email import message
 from django.shortcuts import render
 import random
 from argparse import Action
@@ -8,7 +9,7 @@ from . import models
 from . import serializers
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import generics, mixins, viewsets
+from rest_framework import generics, mixins, viewsets ,views
 from rest_framework import request, status, viewsets
 from django.contrib.auth.models import User
 from rest_framework.decorators import action
@@ -33,7 +34,9 @@ def verify(request):
      otp_store=models.otp.objects.filter(username=username)
      p=otp_store[0].otp
      if otp == p :
-        cuser=User.objects.create(username=otp_store[0].username,password=otp_store[0].password)
+        cuser=User.objects.create(username=otp_store[0].username)
+        cuser.set_password(otp_store[0].password)
+        cuser.save()
         token, created = Token.objects.get_or_create(user=cuser)
         otp_store.delete()
         return Response({ 'token' :token.key ,"user_id":cuser.id})
@@ -42,6 +45,35 @@ def verify(request):
   except:
      return Response({ "Not Valid Data"})
 
+class Send_messages_to_user(views.APIView):
+    def post(self, request):
+        data=request.data
+        messag_send=data[0]['message']
+        users=data[0]['user']
+        for user in users:
+
+            send_messages(user['phone'],messag_send)
+        return Response({ 'send':'ok'})
+
+def send_messages(phone,message):
+      try:
+            print (message,phone)
+            account_sid = 'AC097b5c7e29ab100f96a02bd1028c3d52'
+            auth_token =  'b9cbeb02b552d2e3b2484be826347cbc'
+            client = Client(account_sid, auth_token)
+            
+            message = client.messages.create(
+                                body=message,
+                                from_='+19794599329',
+                                to=phone
+                           )
+      except:
+          return "Erorr to send message "
+
+    
+    
+
+    
 
         
      
