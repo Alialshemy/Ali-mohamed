@@ -56,14 +56,14 @@ class Get_profile(views.APIView):
    authentication_classes = (TokenAuthentication,)
    permission_classes = (IsAuthenticated,)
    def get(self, request, id):
-     # try:
+      try:
         data = models.User_profile.objects.filter(user_id=id)
         if data:
             serializer = serializers.ProfileSerialzer(data, many=True)
             return Response(status=200, data=serializer.data)
         return Response(status=400, data={"profile not found"})
-    #  except:
-    #        return Response(status=400, data={"Not valid Id"})
+      except:
+            return Response(status=400, data={"Not valid Id"})
 ################################################################################
 #  change role to specific user the do by boss only
 class Change_role(views.APIView):
