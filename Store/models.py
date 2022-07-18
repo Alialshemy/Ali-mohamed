@@ -27,7 +27,7 @@ class store(models.Model):
     purchases=models.BigIntegerField()
 
     def __str__(self) -> str:
-         return self.id
+         return str(self.id)
 
 
 

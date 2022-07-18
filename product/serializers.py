@@ -5,3 +5,8 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.product
         fields = '__all__'
+#class GropShowserialzer(serializers.ModelSerializer):
+ #   company=serializers.StringRelatedField(many=True)
+ #   class Meta:
+ #       model:models.product
+  #      fields = '__all__'

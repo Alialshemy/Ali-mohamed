@@ -35,4 +35,3 @@ class product(viewsets.ModelViewSet):
         serializer = self.get_serializer(st,many=True)
         return Response (serializer.data)
 
-        
