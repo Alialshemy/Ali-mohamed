@@ -21,8 +21,14 @@ from rest_framework.authtoken.models import Token
 class product(viewsets.ModelViewSet):
     queryset = models.product.objects.all()
     serializer_class = serializers.ProductSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+   # authentication_classes = (TokenAuthentication,)
+ #   permission_classes = (IsAuthenticated,)
+    def list(self, request, *args, **kwargs):
+        queryset=models.product.objects.all().order_by('company_id')
+        serializer =serializers.ProductSerializer(queryset,many=True)
+        print(type(serializer))
+        serializer.insert()
+        return Response(serializer.data)
     @action(detail=True,methods=['get'],url_path='category')
     def product_in_category(self,request,pk=None):
         st=models.product.objects.filter(category_id=pk)

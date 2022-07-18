@@ -56,14 +56,14 @@ class Get_profile(views.APIView):
    authentication_classes = (TokenAuthentication,)
    permission_classes = (IsAuthenticated,)
    def get(self, request, id):
-      try:
-        data = models.User_profile.objects.filter(user=id)
+     # try:
+        data = models.User_profile.objects.filter(user_id=id)
         if data:
             serializer = serializers.ProfileSerialzer(data, many=True)
             return Response(status=200, data=serializer.data)
-        return Response(status=400, data={" `profile not found"})
-      except:
-            return Response(status=400, data={"Not valid Id"})
+        return Response(status=400, data={"profile not found"})
+    #  except:
+    #        return Response(status=400, data={"Not valid Id"})
 ################################################################################
 #  change role to specific user the do by boss only
 class Change_role(views.APIView):
@@ -129,7 +129,9 @@ def login(request):
      user=User.objects.get(username=username)
      if user.check_password(password):
            otp=Token.objects.get(user=user.id)
-           return Response({ 'token':otp.key,'user_id':user.id})
+           ali=profile=models.User_profile.objects.get(user_id=user.id)
+           store_id=ali.store_id
+           return Response({ 'token':otp.key,'user_id':user.id, 'store_id': str(store_id)})
      else:
           return Response({ 'user' :"password Error"})       
      

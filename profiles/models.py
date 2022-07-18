@@ -31,7 +31,7 @@ class  User_profile(models.Model):
     name=models.CharField(max_length=20)
     user_id= models.OneToOneField(User, on_delete=models.CASCADE)
     store_id=models.ForeignKey('Store.store',on_delete=models.CASCADE)
-    phone=models.CharField(max_length=11)
+    phone=models.CharField(max_length=13)
     image=models.ImageField(upload_to=get_file_path)
     location=PlainLocationField(based_fields=['city'], zoom=7)
     market_name=models.CharField(max_length=50)

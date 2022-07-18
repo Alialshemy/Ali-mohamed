@@ -17,4 +17,4 @@ class ChangeRoleSerialzer(serializers.ModelSerializer):
 class ShowCustomSerialzer(serializers.ModelSerializer):
     class Meta:
         model = models.User_profile
-        fields = ['id','name','marketName','image']
+        fields = ['id','name','market_name','image']
