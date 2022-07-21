@@ -9,7 +9,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 router = routers.DefaultRouter()
 #router.register('register', api.UserViewSet)
 
-router.register('product',views.product )
+#router.register('',views.product )
 
 
 
@@ -18,6 +18,8 @@ urlpatterns = [
  #   path('section/<str:id>', api.get_all_category_in_section.as_view(),name='get_all_category_in_section'),
 #    path('category/<str:id>', api.get_all_product_in_category.as_view(),name='get_all_product_in_category'),
     # create token 
-    path('', include(router.urls)),
+#    path('', include(router.urls)),
+    path('get/',views.Get_product.as_view(),name='Get_product'),
+
    
 ]

@@ -43,23 +43,26 @@ def verify(request):
      else:
          return Response({ "Not Valid otp"})
   except:
-     return Response({ "Not Valid Data"})
+    return Response({ "Not Valid Data"})
 
 class Send_messages_to_user(views.APIView):
     def post(self, request):
-        data=request.data
-        messag_send=data[0]['message']
-        users=data[0]['user']
-        for user in users:
+        try:
+                data=request.data
+                messag_send=data['message']
+                users=data['users']
+                for user in users:
 
-            send_messages(user['phone'],messag_send)
-        return Response({ 'send':'ok'})
+                    send_messages(user['phone'],messag_send)
+                return Response({ 'send':'ok'})
+        except:
+            return Response({ 'Error':'invalid Json'})
 
 def send_messages(phone,message):
       try:
             print (message,phone)
             account_sid = 'AC097b5c7e29ab100f96a02bd1028c3d52'
-            auth_token =  'b9cbeb02b552d2e3b2484be826347cbc'
+            auth_token =  '80470de7cb498cf77d175a223318aee5'
             client = Client(account_sid, auth_token)
             
             message = client.messages.create(

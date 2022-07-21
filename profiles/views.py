@@ -3,6 +3,7 @@ from lib2to3.pgen2 import token
 import numbers
 from operator import eq
 import random
+import re
 from django.shortcuts import render
 from django.shortcuts import render
 from  opt_message import  models as otp
@@ -37,19 +38,21 @@ def check_user_exit(username):
 class Profile(generics.CreateAPIView):
     queryset = models.User_profile.objects.all()
     serializer_class = serializers.ProfileSerialzer
- #   authentication_classes = (TokenAuthentication,)
- #   permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 # return user with specific Role
 class Show_Custom_user(views.APIView):
    authentication_classes = (TokenAuthentication,)
    permission_classes = (IsAuthenticated,)
    def get(self, request, role):
+      try:
         data = models.User_profile.objects.filter(Role=role)
         if data:
             serializer = serializers.ShowCustomSerialzer(data, many=True)
             return Response(status=200, data=serializer.data)
-        return Response(status=400, data={" `User not found"})
-
+        return Response(status=400, data={"User not found"})
+      except:
+         return Response(status=400, data={"Error"})
 ###################################################################
 # Return profile with specifi user         
 class Get_profile(views.APIView):
@@ -78,9 +81,6 @@ class Change_role(views.APIView):
             return Response(status=200, data={"Chane Success"})
       except:
            return Response(status=200, data={"Not valid data"})
-         
-
-
 @api_view(['POST'])
 def register(request):
     
@@ -119,22 +119,28 @@ def send_opt(username):
             
         except:
             return "error"
-                
+
+########################################################
+
+
 @api_view(['POST'])
 def login(request):
-  try:
+ # try:
      
-     username=request.data.get("username")
-     password=request.data.get("password")
-     user=User.objects.get(username=username)
-     if user.check_password(password):
-           otp=Token.objects.get(user=user.id)
-           ali=profile=models.User_profile.objects.get(user_id=user.id)
-           store_id=ali.store_id
-           return Response({ 'token':otp.key,'user_id':user.id, 'store_id': str(store_id)})
-     else:
-          return Response({ 'user' :"password Error"})       
-     
-    
-  except:
-     return Response({ "Not Register"})
+            username=request.data.get("username")
+            password=request.data.get("password")
+            
+            if True:
+                  user=User.objects.get(username=username)
+                  if user.check_password(password):
+                        otp=Token.objects.get(user=user.id)
+                        ali=profile=models.User_profile.objects.get(user_id=user.id)
+                        store_id=ali.store_id
+                        return Response({ 'token':otp.key,'user_id':user.id, 'store_id': str(store_id)})
+                  else:
+                            return Response({ 'user' :"password Error"})       
+            
+            else :
+                  return Response({ 'Error' :"Invalid number "}) 
+ # except:
+#     return Response({ "Not Register"})
