@@ -33,11 +33,7 @@ class product(viewsets.ModelViewSet):
         print(type(serializer))
         serializer.insert()
         return Response(serializer.data)
-    @action(detail=True,methods=['get'],url_path='category')
-    def product_in_category(self,request,pk=None):
-        st=models.product.objects.filter(category_id=pk)
-        serializer = self.get_serializer(st,many=True)
-        return Response (serializer.data)
+   
 class Get_product (views.APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
@@ -60,12 +56,6 @@ class Get_product (views.APIView):
                             prod.clear()
                             data_res[star.id]=copy.deepcopy(data)
                         # data.clear()
-                            
-                        
-                            
-              #  print(data)  
-            #  app_json = json.dumps(data, sort_keys=True)
-            #  print(app_json)
             
                 return Response (data_res)
         except:
