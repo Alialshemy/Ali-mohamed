@@ -25,14 +25,22 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 from . import models
 # Create your views here.
-
+import re
+def validate_namber(phone):
+   rule=re.compile(r'^[+][2][0][1]\d\d\d\d\d\d\d\d\d$')
+   if not rule.search(phone):
+        return False
+   else: 
+       return True
 def check_user_exit(username):
     
      try:
         user_Exit=False
-        otp.otp.objects.get(username=username)
-        return True
-     except otp.otp.DoesNotExist:
+        if  User.objects.filter(username=username).exists() or otp.otp.objects.filter(username=username).exists():
+             return True
+        else:     
+           return False
+     except :
          return False
    # create new profile with user
 class Profile(generics.CreateAPIView):
@@ -82,20 +90,23 @@ class Change_role(views.APIView):
       except:
            return Response(status=200, data={"Not valid data"})
 @api_view(['POST'])
+# register user and send opt message validate
 def register(request):
     
    try:
      
      username=request.data.get("username")
      password=request.data.get("password")
-     if not check_user_exit(username):            
-            code=send_opt(username)     
-            otp.otp.objects.create(username=username,password=password,otp=code)
-            return Response({ "send":"OK"})
-
-     else:
-        return Response({ "send":"user Exit"})
-    
+     if validate_namber(username):
+         if not check_user_exit(username):            
+                  code=send_opt(username)     
+                  otp.otp.objects.create(username=username,password=password,otp=code)
+                  return Response({ "send":"OK"})
+         else:
+            return Response({ "send":"user Exit"})
+     else: 
+          return Response({ "Error":" Invalid number"})
+         
    except: 
     return Response({ "ERROR Data"})
 #######################################################
@@ -125,22 +136,25 @@ def send_opt(username):
 
 @api_view(['POST'])
 def login(request):
- # try:
+  try:
      
             username=request.data.get("username")
             password=request.data.get("password")
             
-            if True:
+            if validate_namber(username):
+               if User.objects.filter(username=username).exists():  
                   user=User.objects.get(username=username)
                   if user.check_password(password):
-                        otp=Token.objects.get(user=user.id)
+                        token=Token.objects.get(user=user.id)
                         ali=profile=models.User_profile.objects.get(user_id=user.id)
                         store_id=ali.store_id
-                        return Response({ 'token':otp.key,'user_id':user.id, 'store_id': str(store_id)})
+                        return Response({ 'token':token.key,'user_id':user.id, 'store_id': str(store_id)})
                   else:
-                            return Response({ 'user' :"password Error"})       
+                            return Response({ 'user' :"password Error"})   
+               else:
+                      return Response({ 'Error' :"Not Register number "}) 
             
             else :
                   return Response({ 'Error' :"Invalid number "}) 
- # except:
-#     return Response({ "Not Register"})
+  except:
+     return Response({ "Not Register or not have profile"})

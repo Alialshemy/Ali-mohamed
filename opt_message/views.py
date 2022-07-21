@@ -24,6 +24,14 @@ from rest_framework.parsers import JSONParser
 
 
 ####################################################
+import re
+def validate_namber(phone):
+   rule=re.compile(r'^[+][2][0][1]\d\d\d\d\d\d\d\d\d$')
+   if not rule.search(phone):
+        return False
+   else: 
+       return True
+
 ##############################################
 @api_view(['POST'])
 def verify(request):
@@ -31,31 +39,42 @@ def verify(request):
 
      otp=request.data.get('otp')
      username=request.data.get('username')
-     otp_store=models.otp.objects.filter(username=username)
-     p=otp_store[0].otp
-     if otp == p :
-        cuser=User.objects.create(username=otp_store[0].username)
-        cuser.set_password(otp_store[0].password)
-        cuser.save()
-        token, created = Token.objects.get_or_create(user=cuser)
-        otp_store.delete()
-        return Response({ 'token' :token.key ,"user_id":cuser.id})
+     if validate_namber(username):
+            otp_store=models.otp.objects.filter(username=username)
+            p=otp_store[0].otp
+            if otp == p :
+                cuser=User.objects.create(username=otp_store[0].username)
+                cuser.set_password(otp_store[0].password)
+                cuser.save()
+                token, created = Token.objects.get_or_create(user=cuser)
+                otp_store.delete()
+                return Response({ 'token' :token.key ,"user_id":cuser.id})
+            else:
+                return Response({ "Not Valid otp"})
      else:
-         return Response({ "Not Valid otp"})
+         return Response({ "Not Valid number"})
   except:
-    return Response({ "Not Valid Data"})
+    return Response({ "Not Register User"})
 
 class Send_messages_to_user(views.APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def post(self, request):
-        try:
+        
+       try:  
+                send={}
                 data=request.data
                 messag_send=data['message']
                 users=data['users']
                 for user in users:
-
+                  if validate_namber(user['phone']) and User.objects.filter(username=user['phone']).exists():
                     send_messages(user['phone'],messag_send)
-                return Response({ 'send':'ok'})
-        except:
+                    send[user['phone']]="send ok"
+                  else:
+                      send[user['phone']]="Invalid Number"
+                      print("nonononono")
+                return Response(send)
+       except:
             return Response({ 'Error':'invalid Json'})
 
 def send_messages(phone,message):

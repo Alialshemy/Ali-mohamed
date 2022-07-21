@@ -22,17 +22,13 @@ from rest_framework.permissions import  AllowAny, IsAuthenticated, IsAdminUser, 
 from django.core import serializers as ser
 from rest_framework.authtoken.models import Token
 ###################################################################
-class product(viewsets.ModelViewSet):
+class product_add(generics.CreateAPIView):
     queryset = models.product.objects.all()
     serializer_class = serializers.ProductSerializer
-   # authentication_classes = (TokenAuthentication,)
- #   permission_classes = (IsAuthenticated,)
-    def list(self, request, *args, **kwargs):
-        queryset=models.product.objects.all().order_by('company_id')
-        serializer =serializers.ProductSerializer(queryset,many=True)
-        print(type(serializer))
-        serializer.insert()
-        return Response(serializer.data)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+   
+   
    
 class Get_product (views.APIView):
     authentication_classes = (TokenAuthentication,)

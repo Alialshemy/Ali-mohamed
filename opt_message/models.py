@@ -16,7 +16,7 @@ from pkg_resources import require #add this
 # Create your models here.
 class otp(models.Model):
     otp=models.CharField(max_length=10)
-    username = models.CharField(max_length=12)
+    username = models.CharField(max_length=13)
     password=models.CharField(max_length=20)
     def __str__(self) -> str:
         return self.otp
