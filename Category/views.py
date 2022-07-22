@@ -50,10 +50,9 @@ class Get_Product_in_Category(views.APIView):
                                 for items in instance :
                                 
                                     prod.append(items['fields'])
-                                data['name']=star.name
-                                data['Product']=copy.deepcopy(prod)
+                               
+                                data_res[star.name]=copy.deepcopy(prod)
                                 prod.clear()
-                                data_res[star.id]=copy.deepcopy(data)
                             # data.clear()
                     
                     return Response (data_res)
