@@ -39,7 +39,6 @@ class Get_Product_in_Category(views.APIView):
         #   else:
         #        return Response ({"Not Found any product"})
             try:
-                    list=[]
                     data={}
                     data_res={}
                     prod=[]
@@ -56,8 +55,8 @@ class Get_Product_in_Category(views.APIView):
                                 prod.clear()
                                 data_res[star.id]=copy.deepcopy(data)
                             # data.clear()
-                    list.append(data_res)
-                    return Response (list)
+                    
+                    return Response (data_res)
             except:
                 return Response ({"Error"})
                     
