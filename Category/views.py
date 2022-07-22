@@ -1,5 +1,6 @@
 import copy
 from pyexpat import model
+from tkinter.tix import Tree
 from django.shortcuts import render
 
 
@@ -20,6 +21,7 @@ from   product import serializers as product_serialzer
 from rest_framework.permissions import  AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from django.core import serializers as ser
 from company import models as company_model
+from product import serializers as product_serialzer
 from rest_framework.authtoken.models import Token
 ############################################################
 class category(viewsets.ModelViewSet):
@@ -39,22 +41,15 @@ class Get_Product_in_Category(views.APIView):
         #   else:
         #        return Response ({"Not Found any product"})
             try:
-                    data={}
+                   
                     data_res={}
-                    prod=[]
                     star_set = company_model.company.objects.all()
-                    for star in star_set.iterator():
+                    for star in star_set.iterator():                        
                         if  product_model.product.objects.filter(company_id=star.id,category_id=pk)  :
-                                
-                                instance= ser.serialize("python",product_model.product.objects.filter(company_id=star.id))
-                                for items in instance :
-                                
-                                    prod.append(items['fields'])
                                
-                                data_res[star.name]=copy.deepcopy(prod)
-                                prod.clear()
-                            # data.clear()
-                    
+                                instance=product_serialzer.ProductSerializer(product_model.product.objects.filter(company_id=star.id,category_id=pk),many=True).data
+
+                                data_res[star.name]=instance
                     return Response (data_res)
             except:
                 return Response ({"Error"})
