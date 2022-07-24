@@ -28,9 +28,14 @@ class product_add(generics.CreateAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
    
+class Get_product(views.APIView):
+    def get(self,request,pk):
+        prod=models.product.objects.filter(id=pk)
+        data=serializers.ProductSerializer(prod,many=True).data
+        return Response(data)
+
    
-   
-class Get_product (views.APIView):
+class Get_products (views.APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
     def get(self,request):

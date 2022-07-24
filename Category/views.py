@@ -7,6 +7,8 @@ from django.shortcuts import render
 from argparse import Action
 import imp
 from  rest_framework.response import Response
+
+from cart.models import cartitem
 from . import models
 from . import serializers
 from rest_framework.decorators import api_view
@@ -53,4 +55,3 @@ class Get_Product_in_Category(views.APIView):
                     return Response (data_res)
             except:
                 return Response ({"Error"})
-                    

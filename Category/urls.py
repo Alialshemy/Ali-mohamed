@@ -17,5 +17,5 @@ urlpatterns = [
     # create token 
     
      path('get/product/<str:pk>',views.Get_Product_in_Category.as_view(),name='Get_Product_in_Category'),
-    path('', include(router.urls)),
+     path('', include(router.urls)),
 ]

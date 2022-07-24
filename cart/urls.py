@@ -19,6 +19,9 @@ urlpatterns = [
  #   path('section/<str:id>', api.get_all_category_in_section.as_view(),name='get_all_category_in_section'),
 #    path('category/<str:id>', api.get_all_product_in_category.as_view(),name='get_all_product_in_category'),
     # create token 
-    path('', include(router.urls)),
+    path('add',views.add_cart_cartem.as_view(),name="add_cart_cartem"),
+    path('get/<str:pk>',views.get_cart_items.as_view(),name="get_cart_cartem"),
+    path('store/<str:pk>',views.Get_cart_in_store.as_view(),name="Get_cart_in_store"),
+    path('', include(router.urls))
    
 ]
