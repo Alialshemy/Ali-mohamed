@@ -1,3 +1,4 @@
+from urllib import response
 from django.shortcuts import render
 
 
@@ -42,3 +43,13 @@ class Get_Section_in_store(views.APIView):
                  return Response (data.data)
            else:
                 return Response ({"Not Found any Section"})
+
+
+class test(views.APIView):
+    def post(self,request):
+        data=request.data
+        serializer = serializers.StoreSerializer(data=data)
+        serializer.validated_data()
+       # print(serializer.is_valid())
+      #  serializer.save()
+        return Response(data)

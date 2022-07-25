@@ -27,18 +27,10 @@ from Store import models as store_model
 from rest_framework.authtoken.models import Token
 #####################################################
 
-class cart(viewsets.ModelViewSet):
-    queryset = models.cart.objects.all()
-    serializer_class = serializers.CartSerializer
-  #  authentication_classes = (TokenAuthentication,)
-  #  permission_classes = (IsAuthenticated,)
-class cartitems(viewsets.ModelViewSet):
-    queryset = models.cartitem.objects.all()
-    serializer_class = serializers.CartItemSerializer
-  #  authentication_classes = (TokenAuthentication,)
-  #  permission_classes = (IsAuthenticated,)
-  #######################################################
+  #get cart and items in this cart 
 class get_cart_items(views.APIView):
+   authentication_classes = (TokenAuthentication,)
+   permission_classes = (IsAuthenticated,)
    def get(self,request,pk):
       try:
                    
@@ -54,8 +46,10 @@ class get_cart_items(views.APIView):
                     return Response (data)
       except:
             return Response ({"invalid pk"})
+#add cart and cart items 
 class add_cart_cartem(views.APIView):
-   
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def post(self,request):
        try:   
             data=request.data
@@ -75,28 +69,21 @@ class add_cart_cartem(views.APIView):
                           unitname=item['unitname'],
                           image=item['image']
 
-                          )
-        #   models.cartitem.objects.create(serializer.data)
-        
+                          ) 
             return Response({"ok"}, status=status.HTTP_200_OK) 
        except:
          return Response({"Invalid data"}, status=status.HTTP_400_BAD_REQUEST) 
-         
-   
-     # except:
-     #           return Response ({"Error"})
-
+# Get all cart in store
 class Get_cart_in_store(views.APIView):
   def get(self,request,pk):
        data=models.cart.objects.filter(store_id=pk).order_by('cart_number').reverse()
        return Response (serializers.CartSerializer(data,many=True).data)
-    
 @receiver(post_save, sender=models.cartitem)
 def update_field(sender, instance, **kwargs):
    try:
       product=instance.product_id
       product.quantityInStore=product.quantityInStore+instance.quantity
-      product.purchase_cost =product.purchase_price * product.quantityInStore
+      product.purchase_cost =product.purchase_cost + (instance.purchase_price * instance.quantity)
       product.purchase_price= product.purchase_cost / product.quantityInStore
       product.save()
    except:

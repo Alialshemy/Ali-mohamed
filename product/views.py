@@ -22,6 +22,7 @@ from rest_framework.permissions import  AllowAny, IsAuthenticated, IsAdminUser, 
 from django.core import serializers as ser
 from rest_framework.authtoken.models import Token
 ###################################################################
+
 class product_add(generics.CreateAPIView):
     queryset = models.product.objects.all()
     serializer_class = serializers.ProductSerializer
@@ -33,32 +34,3 @@ class Get_product(views.APIView):
         prod=models.product.objects.filter(id=pk)
         data=serializers.ProductSerializer(prod,many=True).data
         return Response(data)
-
-   
-class Get_products (views.APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
-    def get(self,request):
-        try:
-                data={}
-                data_res={}
-                prod=[]
-                star_set = models.company.objects.all()
-                for star in star_set.iterator():
-                    
-                    if  models.product.objects.filter(company_id=star.id):
-                            
-                            instance= ser.serialize("python",models.product.objects.filter(company_id=star.id))
-                            for items in instance :
-                            
-                                prod.append(items['fields'])
-                            data['name']=star.name
-                            data['Product']=copy.deepcopy(prod)
-                            prod.clear()
-                            data_res[star.id]=copy.deepcopy(data)
-                        # data.clear()
-            
-                return Response (data_res)
-        except:
-             return Response ({"Error"})
-

@@ -13,10 +13,8 @@ router.register('orderitems',views.orderitems )
 
 
 urlpatterns = [
-  #  path('store/<str:id>', api.get_all_Section_in_store.as_view(),name='get_all_Section_in_store'),
- #   path('section/<str:id>', api.get_all_category_in_section.as_view(),name='get_all_category_in_section'),
-#    path('category/<str:id>', api.get_all_product_in_category.as_view(),name='get_all_product_in_category'),
-    # create token 
+    
     path('', include(router.urls)),
+    path('add',views.Add_order.as_view())
    
 ]

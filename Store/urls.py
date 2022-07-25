@@ -18,5 +18,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('storename', views.Get_store_name.as_view(),name="Get_store_name"),
     path('get/section/<str:pk>', views.Get_Section_in_store.as_view(),name="Get_Section_in_store"),
-   
+    path('add',views.test.as_view())
 ]

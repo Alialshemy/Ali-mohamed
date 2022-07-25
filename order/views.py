@@ -8,8 +8,7 @@ from . import models
 from . import serializers
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import generics, mixins, viewsets
-from rest_framework import request, status, viewsets
+from rest_framework import generics, mixins, viewsets ,request, status,views 
 from django.contrib.auth.models import User
 from rest_framework.decorators import action
 from rest_framework.authentication import TokenAuthentication
@@ -30,5 +29,10 @@ class orderitems(viewsets.ModelViewSet):
     serializer_class = serializers.OrderitemSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-   
+
+class Add_order(views.APIView):
+    def post(self,request):
+        
+        data=request.data
+        return Response(data)   
 

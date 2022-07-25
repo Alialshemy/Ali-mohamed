@@ -33,15 +33,9 @@ class category(viewsets.ModelViewSet):
  #   permission_classes = (IsAuthenticated,)
    
 class Get_Product_in_Category(views.APIView):
-    #  authentication_classes = (TokenAuthentication,)
-    #  permission_classes = (IsAuthenticated,)
+      authentication_classes = (TokenAuthentication,)
+      permission_classes = (IsAuthenticated,)
       def get(self, request, pk):
-        #   product_data=product_model.product.objects.filter(category_id=pk)
-         #  if product_data :
-         #        data=product_serialzer.ProductSerializer(product_data,many=True)
-         #        return Response (data.data)
-        #   else:
-        #        return Response ({"Not Found any product"})
             try:
                    
                     data_res={}
