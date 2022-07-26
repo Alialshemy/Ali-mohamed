@@ -29,8 +29,8 @@ from rest_framework.authtoken.models import Token
 
   #get cart and items in this cart 
 class get_cart_items(views.APIView):
-   authentication_classes = (TokenAuthentication,)
-   permission_classes = (IsAuthenticated,)
+  # authentication_classes = (TokenAuthentication,)
+  # permission_classes = (IsAuthenticated,)
    def get(self,request,pk):
       try:
                    
@@ -48,8 +48,8 @@ class get_cart_items(views.APIView):
             return Response ({"invalid pk"})
 #add cart and cart items 
 class add_cart_cartem(views.APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+   # authentication_classes = (TokenAuthentication,)
+   # permission_classes = (IsAuthenticated,)
     def post(self,request):
        try:   
             data=request.data
@@ -83,9 +83,10 @@ def update_field(sender, instance, **kwargs):
    try:
       product=instance.product_id
       product.quantityInStore=product.quantityInStore+instance.quantity
-      product.purchase_cost =product.purchase_cost + (instance.purchase_price * instance.quantity)
+      product.purchase_cost = float(product.purchase_cost) + ( float( instance.purchas_price) * float( instance.quantity))
       product.purchase_price= product.purchase_cost / product.quantityInStore
       product.save()
+      print("sffdsfdsdf")
    except:
     print ("error signal") 
   

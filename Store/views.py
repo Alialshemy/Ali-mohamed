@@ -17,7 +17,6 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import action
 from rest_framework.authentication import TokenAuthentication
 from section import models as section_model
-from section import serializers as sections_ser
 from rest_framework.permissions import  AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 
 from rest_framework.authtoken.models import Token
@@ -39,17 +38,9 @@ class Get_Section_in_store(views.APIView):
       def get(self, request, pk):
            section_data=section_model.section.objects.filter(store_id=pk)
            if section_data :
-                 data=sections_ser.SectionSerializer(section_data,many=True)
+                 data=serializers.SectionSerializer(section_data,many=True)
                  return Response (data.data)
            else:
                 return Response ({"Not Found any Section"})
 
 
-class test(views.APIView):
-    def post(self,request):
-        data=request.data
-        serializer = serializers.StoreSerializer(data=data)
-        serializer.validated_data()
-       # print(serializer.is_valid())
-      #  serializer.save()
-        return Response(data)

@@ -14,7 +14,7 @@ router.register('orderitems',views.orderitems )
 
 urlpatterns = [
     
-    path('', include(router.urls)),
+    #path('', include(router.urls)),
     path('add',views.Add_order.as_view())
    
 ]

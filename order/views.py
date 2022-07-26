@@ -21,8 +21,8 @@ from rest_framework.authtoken.models import Token
 class order(viewsets.ModelViewSet):
     queryset = models.order.objects.all()
     serializer_class = serializers.OrderSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+ #   authentication_classes = (TokenAuthentication,)
+ #   permission_classes = (IsAuthenticated,)
    #################################################
 class orderitems(viewsets.ModelViewSet):
     queryset = models.orderitem.objects.all()
@@ -32,7 +32,7 @@ class orderitems(viewsets.ModelViewSet):
 
 class Add_order(views.APIView):
     def post(self,request):
-        
         data=request.data
-        return Response(data)   
+        orderitems=data['orderitems']
+      
 

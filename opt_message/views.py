@@ -67,8 +67,9 @@ class Send_messages_to_user(views.APIView):
                 messag_send=data['message']
                 users=data['users']
                 for user in users:
-                  if validate_namber(user['phone']) and User.objects.filter(username=user['phone']).exists():
-                    send_messages(user['phone'],messag_send)
+                  if User.objects.filter(id=user['id']).exists():
+                    phone=User.objects.get(id=user['id'])
+                    send_messages(phone.username,messag_send)
                     send[user['phone']]="send ok"
                   else:
                       send[user['phone']]="Invalid Number"
@@ -81,7 +82,7 @@ def send_messages(phone,message):
       try:
             print (message,phone)
             account_sid = 'AC097b5c7e29ab100f96a02bd1028c3d52'
-            auth_token =  '80470de7cb498cf77d175a223318aee5'
+            auth_token =  'de34c9b09fcdee17b34c7d26e50061a5'
             client = Client(account_sid, auth_token)
             
             message = client.messages.create(

@@ -28,15 +28,15 @@ class product(models.Model):
     company_id=models.ForeignKey('company.company',on_delete=models.CASCADE)
     image=models.ImageField(upload_to=get_file_path)
     unit_name=models.CharField(max_length=50)
-    selling_price=models.DecimalField(max_digits=20, decimal_places=10)
+    selling_price=models.FloatField()
     has_list=models.BooleanField()
     list_name=models.CharField(max_length=50)
     list_amount=models.BigIntegerField()
-    listselling_price=models.DecimalField(max_digits=20, decimal_places=10)
+    listselling_price=models.FloatField()
     quantityInStore=models.BigIntegerField()
     title=models.CharField(max_length=30)
-    purchase_price=models.DecimalField(max_digits=50,decimal_places=10)
-    purchase_cost=models.DecimalField(max_digits=50,decimal_places=10)
+    purchase_price=models.FloatField()
+    purchase_cost=models.FloatField()
     def __str__(self) -> str:
          return self.name
 ################################################################

@@ -27,7 +27,7 @@ def get_file_path(instance, filename):
 class  order(models.Model):
     id = models.CharField(primary_key=True, default= uuid.uuid4, editable=False,max_length=40)
     store_id=models.ForeignKey('Store.store',on_delete=models.CASCADE)
-    customer_id=models.ForeignKey('profiles.user_profile',on_delete=models.CASCADE)
+    customer_id=models.ForeignKey('profiles.User_profile',on_delete=models.CASCADE)
     date=models.DateField()
     purchas_price=models.DecimalField(max_digits=20, decimal_places=10)
     profit=models.DecimalField(max_digits=20, decimal_places=10)
