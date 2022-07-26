@@ -57,11 +57,11 @@ def verify(request):
     return Response({ "Not Register User"})
 
 class Send_messages_to_user(views.APIView):
- #   authentication_classes = (TokenAuthentication,)
- #   permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     def post(self, request):
         
-    #   try:  
+       try:  
                 send={}
                 data=request.data
                 messag_send=data['message']
@@ -75,8 +75,8 @@ class Send_messages_to_user(views.APIView):
                       send[user['id']]="Invalid Number"
                       print("nonononono")
                 return Response(send)
-      # except:
-        #    return Response({ 'Error':'invalid Json'})
+       except:
+            return Response({ 'Error':'invalid Json'})
 
 def send_messages(phone,message):
       try:
